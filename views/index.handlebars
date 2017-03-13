@@ -1,0 +1,32 @@
+<h1>Food List</h1>
+
+<ul>
+  {{#each dish}}
+    <li>
+      <p>
+        {{this.id}}. {{this.dish_name}}
+
+        <form action="/{{this.id}}?_method=PUT" method="POST">
+          <input type="hidden" name="id" value="{{this.id}}">
+          <button type="submit">Devour it!!</button>
+        </form>
+      </p>
+    </li>
+  {{/each}}
+</ul>
+
+<h2>Add a dish to the list</h2>
+<form method="POST" action="/" class="button-size">
+  <textarea type="text" name="dish"></textarea>
+  <button type="submit">Save dish!</button>
+</form>
+
+<ul>
+  {{#each devouredDish}}
+    <li>
+      <p>
+        {{this.id}}. {{this.dish_name}}
+      </p>
+    </li>
+  {{/each}}
+</ul>
