@@ -37,45 +37,45 @@ var connection = require("./config/connection.js");
 // require("./config/orm.js")(app);
 
 
-// var routes = require("./controllers/crave_controller.js");
+var routes = require("./controllers/crave_controller.js");
 
-// app.use("/", routes);
-// app.use("/update", routes);
-// app.use("/create", routes);
+app.use("/", routes);
+app.use("/:id", routes);
+app.use("/create", routes);
 
-var tableName = "food_list";
-app.get("/", function(req, res) {
-    connection.query("SELECT * FROM " + tableName, function(err, data) {
-        if (err) {
-            throw err;
-        }
-        res.render("index", { dish: data });
-    });
-});
+// var tableName = "food_list";
+// app.get("/", function(req, res) {
+//     connection.query("SELECT * FROM " + tableName, function(err, data) {
+//         if (err) {
+//             throw err;
+//         }
+//         res.render("index", { dish: data });
+//     });
+   
 
-app.post("/", function(req, res) {
-	console.log(req.body);
-    let query = "INSERT INTO " + tableName + "(dish_name,devoured,date_created) VALUES (?,?,?)";
-    connection.query(query, [req.body.dish, false, moment().format("YYYY-MM-DD HH:mm:ss")], function(err, data) {
-       if (err) throw err;
-        res.redirect("/");
-    });
+// });
+
+// app.post("/", function(req, res) {
+// 	console.log(req.body);
+//     let query = "INSERT INTO " + tableName + "(dish_name,devoured,date_created) VALUES (?,?,?)";
+//     connection.query(query, [req.body.dish, false, moment().format("YYYY-MM-DD HH:mm:ss")], function(err, data) {
+//        if (err) throw err;
+//         res.redirect("/");
+//     });
     
-});
+// });
 
-app.put("/:id", function(req, res) {
+// app.put("/:id", function(req, res) {
 
-	let query="UPDATE " + tableName + " SET ? WHERE ?";
+// 	let query="UPDATE " + tableName + " SET ? WHERE ?";
 
-  connection.query(query, [{devoured:true},{id:req.params.id}], function(err, data){
-  	console.log(query);
-    if (err) {
-      throw err;
-    }
-   	res.render("index", { devouredDish: data });
-  });
-});
-
-
+//   connection.query(query, [{devoured:true},{id:req.params.id}], function(err, data){
+//   	console.log(data);  	
+//     if (err) {
+//       throw err;
+//     }
+//    	res.redirect("/");
+//   });
+// });
 
 app.listen(PORT);
